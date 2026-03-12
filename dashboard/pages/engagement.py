@@ -15,11 +15,17 @@ def show_page():
     score = validate_clusters(X, df["Cluster"])
     st.write(f"Silhouette Score: {score:.2f}")
 
-    fig = px.scatter(df, x="CallSuccessRate", y="DaysWithMeasurements",
-                     color="ClusterLabel", size="EngagementScoreNorm",
-                     hover_data=["PatientID"])
+    # FIX: use existing columns
+    fig = px.scatter(
+        df,
+        x="CallSuccessRate",
+        y="EngagementScoreNorm",   # replaced DaysWithMeasurements
+        color="ClusterLabel",
+        size="TotalCalls",
+        hover_data=["PatientId", "AnsweredQuestions", "AvgCallDuration"]
+    )
     st.plotly_chart(fig)
 
     st.subheader("High Priority Patients")
-    hp = df[df["ClusterLabel"]=="High Priority"][["PatientID","EngagementScoreNorm"]]
+    hp = df[df["ClusterLabel"]=="High Priority"][["PatientId","EngagementScoreNorm"]]
     st.dataframe(hp)
