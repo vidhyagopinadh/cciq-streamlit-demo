@@ -5,3 +5,4 @@ scikit-learn
 plotly
 mysql-connector-python
 sqlalchemy
+
